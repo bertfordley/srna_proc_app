@@ -9,8 +9,12 @@ RUN conda install cutadapt --yes \
     && conda install samtools --yes \
     && conda install bbmap --yes
 
-# create env?
+RUN mkdir /opt/scripts/
+
+#ADD /src/srna_fastq_processor.py /opt/scripts/srna_fastq_processor.py
+#RUN chmod 777 /opt/scripts/srna_fastq_processor.py
 
 # ENV PATH "/opt/bin/:$PATH"
 # ADD config.yml /config.yml
-ADD src /opt/src
+
+
