@@ -29,7 +29,7 @@ def align_reads(fastq_file, index_file, sam_file):
 
 def make_bam(sam_file):
 
-    bam_file = sam_file[:-3] + ".sorted.bam"
+    bam_file = sam_file[:-3] + "sorted.bam"
     cmd = "samtools view -b -F 0x100 -S {} | samtools sort -o {}".format(
         sam_file, bam_file)
     subprocess.call(cmd, shell=True)
@@ -37,7 +37,7 @@ def make_bam(sam_file):
 
 def filter_spike_reads(bam_file, fastq_file, trimmed_file):
 
-    ids_file = fastq_file[:"-9"] + "filtered_read_ids.txt"
+    ids_file = fastq_file[:-9] + "_filtered_read_ids.txt"
     cmd1 = "samtools view -q 1 {} | cut -f1 > {}".format(
         bam_file, ids_file)
     subprocess.call(cmd1, shell=True)
@@ -69,14 +69,14 @@ if __name__ == "__main__":
 
     parser.add_argument("-si", "--spike_index_dir",
                         type=str,
-                        default=None,
-                        required=True,
+                        default="indices/spike_ins/spike_ins",
+                        required=False,
                         help="dir containing spike-in index files to align reads to")
 
     parser.add_argument("-ri", "--rna_index_dir",
                         type=str,
-                        default=None,
-                        required=True,
+                        default="indices/combined_grna_rna_coding/combined_grna_rna_coding",
+                        required=False,
                         help="dir containing srna and grna index files to align reads to")
 
     parser.add_argument("-o", "--output_dir",
@@ -88,6 +88,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     fastq_file = args.fastq_file
+    fq_base_name = os.path.basename(fastq_file)
     spike_index_dir = args.spike_index_dir
     rna_index_dir = args.rna_index_dir
     output_dir = args.output_dir
@@ -105,12 +106,15 @@ if __name__ == "__main__":
 
     ## Spike-ins
 
+    # make output directory
+    os.mkdir(output_dir)
+
     # output path?
-    trim_file = fastq_file[:-9] + "trim.fastq"
+    trim_file = os.path.join(output_dir, fq_base_name[:-9] + "_trim.fastq")
 
     # use cutadapt to trim reads
     trim_reads(fastq_file, trim_file)
-    spike_sam = fastq_file[:-9] + "trim.spike-ins.sam"
+    spike_sam = os.path.join(output_dir, fq_base_name[:-9] + "_trim.spike-ins.sam")
 
     # align spike-in reads using bowtie2
     align_reads(trim_file, spike_index_dir, spike_sam)
@@ -125,8 +129,7 @@ if __name__ == "__main__":
     filtered_fastq = trim_file[:-6] + "_filtered.fastq"
 
     ## gRNAs and sRNAs
-
-    rna_sam = fastq_file[:-9] + "_rna.sam"
+    rna_sam = os.path.join(output_dir, fq_base_name[:-9] + "_rna.sam")
     # align gRNA/sRNA reads using bowtie2
     align_reads(filtered_fastq, rna_index_dir, rna_sam)
 
@@ -135,4 +138,4 @@ if __name__ == "__main__":
     rna_bam = rna_sam[:-3] + "sorted.bam"
 
     # merge spike-in and gRNA/sRNA bam files
-    merge_bam_files(fastq_file, spike_bam, rna_bam)
+    merge_bam_files(os.path.join(output_dir, fq_base_name), spike_bam, rna_bam)

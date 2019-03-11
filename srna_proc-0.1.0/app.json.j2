@@ -14,7 +14,86 @@
   "shortDescription": "{{ app.description }}",
   "templatePath": "runner-template.sh",
   "testPath": "tester.sh",
-  "inputs": [],
+  "inputs": [
+    {
+        "details": {
+            "argument": "-fq",
+            "description": null,
+            "label": "Forward reads file of small RNAseq fastq pair",
+            "repeatArgument": false,
+            "showArgument": false
+        },
+        "id": "fastq_file",
+        "semantics": {
+            "fileTypes": [],
+            "maxCardinality": 1,
+            "minCardinality": 1,
+            "ontology": [
+                "http://edamontology.org/format_1930"
+            ]
+        },
+        "value": {
+            "default": "",
+            "enquote": false,
+            "order": 0,
+            "required": true,
+            "validator": null,
+            "visible": true
+        }
+    },
+    {
+        "details": {
+            "argument": "-si",
+            "description": null,
+            "label": "directory containing spike-ins index files",
+            "repeatArgument": false,
+            "showArgument": false
+        },
+        "id": "spike_index_dir",
+        "semantics": {
+            "fileTypes": [],
+            "maxCardinality": 1,
+            "minCardinality": 1,
+            "ontology": [
+                ""
+            ]
+        },
+        "value": {
+            "default": "indices/spike_ins/spike_ins",
+            "enquote": false,
+            "order": 0,
+            "required": false,
+            "validator": null,
+            "visible": true
+        }
+    },
+    {
+        "details": {
+            "argument": "-ri",
+            "description": null,
+            "label": "directory containing srna and grna index files",
+            "repeatArgument": false,
+            "showArgument": false
+        },
+        "id": "rna_index_dir",
+        "semantics": {
+            "fileTypes": [],
+            "maxCardinality": 1,
+            "minCardinality": 1,
+            "ontology": [
+                ""
+            ]
+        },
+        "value": {
+            "default": "indices/combined_grna_rna_coding/combined_grna_rna_coding",
+            "enquote": false,
+            "order": 0,
+            "required": false,
+            "validator": null,
+            "visible": true
+        }
+    }
+  ],
   "parameters": [{
     "id": "CONTAINER_IMAGE",
     "value": {
@@ -25,5 +104,27 @@
       "required": true
     }
   }],
-  "outputs": []
+  "outputs": [
+  {
+    "details": {
+        "argument": "-o",
+        "description": null,
+        "label": "directory to store output files"
+    },
+    "id": "output_dir",
+    "semantics": {
+        "fileTypes": [],
+        "maxCardinality": 1,
+        "minCardinality": 1,
+        "ontology": [
+          ""
+        ]
+    },
+    "value": {
+        "default": "output",
+        "order": 0,
+        "validator": null
+    }
+  }
+  ]
 }

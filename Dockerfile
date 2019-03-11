@@ -9,12 +9,9 @@ RUN conda install cutadapt --yes \
     && conda install samtools --yes \
     && conda install bbmap --yes
 
-RUN mkdir /opt/scripts/
+RUN mkdir /opt/src/
 
-#ADD /src/srna_fastq_processor.py /opt/scripts/srna_fastq_processor.py
-#RUN chmod 777 /opt/scripts/srna_fastq_processor.py
-
-# ENV PATH "/opt/bin/:$PATH"
-# ADD config.yml /config.yml
-
+ADD /src/srna_fastq_processor.py /opt/src/srna_fastq_processor.py
+ADD /tests /tests
+ADD /indices /indices
 
