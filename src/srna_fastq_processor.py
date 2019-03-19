@@ -14,7 +14,13 @@ import sys
 
 def trim_reads(fastq_in, fastq_trim_out):
 
-    cmd = "cutadapt -m 15 -u 3 -a {} -j 6 --quiet {} > {}".format(
+    # python 3 - can ran in parallel
+    # cmd = "cutadapt -m 15 -u 3 -a {} -j 6 --quiet {} > {}".format(
+    #     "A{10}", fastq_in, fastq_trim_out)
+    # subprocess.call(cmd, shell=True)
+
+    # python 2 - can't
+    cmd = "cutadapt -m 15 -u 3 -a {} --quiet {} > {}".format(
         "A{10}", fastq_in, fastq_trim_out)
     subprocess.call(cmd, shell=True)
 

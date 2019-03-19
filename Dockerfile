@@ -1,4 +1,4 @@
-FROM sd2e/apps:python3-miniconda
+FROM sd2e/apps:python2-miniconda
 
 RUN conda config --add channels r \
     && conda config --add channels conda-forge \
