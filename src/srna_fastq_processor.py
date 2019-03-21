@@ -76,13 +76,13 @@ if __name__ == "__main__":
     parser.add_argument("-si", "--spike_index_dir",
                         type=str,
                         default="indices/spike_ins/spike_ins",
-                        required=False,
+                        required=True,
                         help="dir containing spike-in index files to align reads to")
 
     parser.add_argument("-ri", "--rna_index_dir",
                         type=str,
                         default="indices/combined_grna_rna_coding/combined_grna_rna_coding",
-                        required=False,
+                        required=True,
                         help="dir containing srna and grna index files to align reads to")
 
     parser.add_argument("-o", "--output_dir",

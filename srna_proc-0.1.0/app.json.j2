@@ -16,6 +16,7 @@
   "testPath": "tester.sh",
   "inputs": [
     {
+        "id": "fastq_file",
         "details": {
             "argument": "-fq",
             "description": null,
@@ -23,7 +24,6 @@
             "repeatArgument": false,
             "showArgument": false
         },
-        "id": "fastq_file",
         "semantics": {
             "fileTypes": [],
             "maxCardinality": 1,
@@ -33,7 +33,7 @@
             ]
         },
         "value": {
-            "default": "",
+            "default": ".",
             "enquote": false,
             "order": 0,
             "required": true,
@@ -42,6 +42,7 @@
         }
     },
     {
+        "id": "spike_index_dir",
         "details": {
             "argument": "-si",
             "description": null,
@@ -49,7 +50,6 @@
             "repeatArgument": false,
             "showArgument": false
         },
-        "id": "spike_index_dir",
         "semantics": {
             "fileTypes": [],
             "maxCardinality": 1,
@@ -62,12 +62,13 @@
             "default": "indices/spike_ins/spike_ins",
             "enquote": false,
             "order": 0,
-            "required": false,
+            "required": true,
             "validator": null,
             "visible": true
         }
     },
     {
+        "id": "rna_index_dir",
         "details": {
             "argument": "-ri",
             "description": null,
@@ -75,7 +76,6 @@
             "repeatArgument": false,
             "showArgument": false
         },
-        "id": "rna_index_dir",
         "semantics": {
             "fileTypes": [],
             "maxCardinality": 1,
@@ -88,13 +88,14 @@
             "default": "indices/combined_grna_rna_coding/combined_grna_rna_coding",
             "enquote": false,
             "order": 0,
-            "required": false,
+            "required": true,
             "validator": null,
             "visible": true
         }
     }
   ],
-  "parameters": [{
+  "parameters": [
+  {
     "id": "CONTAINER_IMAGE",
     "value": {
       "default": "{{ docker.organization }}/{{ docker.repo }}:{{ docker.tag }}",
@@ -103,27 +104,169 @@
       "visible": false,
       "required": true
     }
-  }],
-  "outputs": [
+  },
   {
-    "details": {
-        "argument": "-o",
-        "description": null,
-        "label": "directory to store output files"
-    },
     "id": "output_dir",
-    "semantics": {
-        "fileTypes": [],
-        "maxCardinality": 1,
-        "minCardinality": 1,
-        "ontology": [
-          ""
-        ]
+    "details": {
+      "argument": "-o",
+      "description": null,
+      "label": "Output directory for results",
+      "repeatArgument": false,
+      "showArgument": false
     },
     "value": {
         "default": "output",
-        "order": 0,
-        "validator": null
+        "type": "string",
+        "order": 1,
+        "required": true,
+        "validator": null,
+        "visible": true
+    }
+  }
+  ],
+  "outputs": [
+  {
+    "id": "gRNA_ncRNA.sam",
+    "value":{
+        "default": "gRNA_ncRNA.sam",
+        "order":0,
+        "required":false,
+        "validator":"",
+        "visible":true
+    },
+    "details":{
+        "description":"",
+        "label":"SAM file",
+        "argument":null,
+        "showArgument":false
+    }
+  },
+  {
+    "id": "gRNA_ncRNA.sorted.bam",
+    "value":{
+        "default": "gRNA_ncRNA.sorted.bam",
+        "order":0,
+        "required":false,
+        "validator":"",
+        "visible":true
+    },
+    "details":{
+        "description":"",
+        "label":"Sorted BAM file",
+        "argument":null,
+        "showArgument":false
+    }
+  },
+  {
+    "id": "gRNA_ncRNA_spike_ins.sorted.bam",
+    "value":{
+        "default": "gRNA_ncRNA_spike_ins.sorted.bam",
+        "order":0,
+        "required":false,
+        "validator":"",
+        "visible":true
+    },
+    "details":{
+        "description":"",
+        "label":"Sorted BAM file",
+        "argument":null,
+        "showArgument":false
+    }
+  },
+  {
+    "id": "readme.txt",
+        "value":{
+        "default": "readme.txt",
+        "order":0,
+        "required":false,
+        "validator":"",
+        "visible":true
+    },
+    "details":{
+        "description":"",
+        "label":"README file",
+        "argument":null,
+        "showArgument":false
+    }
+  },
+  {
+    "id": "spike_in_mapped_id.txt",
+        "value":{
+        "default": "spike_in_mapped_id.txt",
+        "order":0,
+        "required":false,
+        "validator":"",
+        "visible":true
+    },
+    "details":{
+        "description":"",
+        "label":"Text file with spike-in IDs found in sample",
+        "argument":null,
+        "showArgument":false
+    }
+  },
+  {
+    "id": "spike_ins.sam",
+        "value":{
+        "default": "spike_ins.sam",
+        "order":0,
+        "required":false,
+        "validator":"",
+        "visible":true
+    },
+    "details":{
+        "description":"",
+        "label":"SAM file",
+        "argument":null,
+        "showArgument":false
+    }
+  },
+  {
+    "id": "spike_ins.sorted.bam",
+        "value":{
+        "default": "spike_ins.sorted.sam",
+        "order":0,
+        "required":false,
+        "validator":"",
+        "visible":true
+    },
+    "details":{
+        "description":"",
+        "label":"Sorted BAM file",
+        "argument":null,
+        "showArgument":false
+    }
+  },
+  {
+    "id": "trim_no_spike_ins.fastq",
+        "value":{
+        "default": "trim_no_spike_ins.fastq",
+        "order":0,
+        "required":false,
+        "validator":"",
+        "visible":true
+    },
+    "details":{
+        "description":"",
+        "label":"Fastq file containing trimmed non-spike-in reads",
+        "argument":null,
+        "showArgument":false
+    }
+  },
+  {
+    "id": "trim.fastq",
+        "value":{
+        "default": "trim.fastq",
+        "order":0,
+        "required":false,
+        "validator":"",
+        "visible":true
+    },
+    "details":{
+        "description":"",
+        "label":"Fastq file containing trimmed reads and spike-in reads",
+        "argument":null,
+        "showArgument":false
     }
   }
   ]
