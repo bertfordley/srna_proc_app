@@ -43,7 +43,7 @@ def make_bam(sam_file):
 
 def filter_spike_reads(bam_file, fastq_file, trimmed_file):
 
-    ids_file = fastq_file[:-9] + "_filtered_read_ids.txt"
+    ids_file = fastq_file + "_filtered_read_ids.txt"
     cmd1 = "samtools view -q 1 {} | cut -f1 > {}".format(
         bam_file, ids_file)
     subprocess.call(cmd1, shell=True)
@@ -130,7 +130,7 @@ if __name__ == "__main__":
     spike_bam = spike_sam[:-3] + "sorted.bam"
 
     # remove spike-in reads from fastq file
-    filter_spike_reads(spike_bam, fastq_file, trim_file)
+    filter_spike_reads(spike_bam, os.path.join(output_dir, fastq_file[:-9]), trim_file)
     # fastq file with no spike-in reads
     filtered_fastq = trim_file[:-6] + "_filtered.fastq"
 

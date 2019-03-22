@@ -33,60 +33,8 @@
             ]
         },
         "value": {
-            "default": ".",
-            "enquote": false,
-            "order": 0,
-            "required": true,
-            "validator": null,
-            "visible": true
-        }
-    },
-    {
-        "id": "spike_index_dir",
-        "details": {
-            "argument": "-si",
-            "description": null,
-            "label": "directory containing spike-ins index files",
-            "repeatArgument": false,
-            "showArgument": false
-        },
-        "semantics": {
-            "fileTypes": [],
-            "maxCardinality": 1,
-            "minCardinality": 1,
-            "ontology": [
-                ""
-            ]
-        },
-        "value": {
-            "default": "indices/spike_ins/spike_ins",
-            "enquote": false,
-            "order": 0,
-            "required": true,
-            "validator": null,
-            "visible": true
-        }
-    },
-    {
-        "id": "rna_index_dir",
-        "details": {
-            "argument": "-ri",
-            "description": null,
-            "label": "directory containing srna and grna index files",
-            "repeatArgument": false,
-            "showArgument": false
-        },
-        "semantics": {
-            "fileTypes": [],
-            "maxCardinality": 1,
-            "minCardinality": 1,
-            "ontology": [
-                ""
-            ]
-        },
-        "value": {
-            "default": "indices/combined_grna_rna_coding/combined_grna_rna_coding",
-            "enquote": false,
+            "default": " ",
+            "enquote": true,
             "order": 0,
             "required": true,
             "validator": null,
@@ -106,6 +54,42 @@
     }
   },
   {
+    "id": "spike_index_dir",
+    "details": {
+        "argument": "-si",
+        "description": null,
+        "label": "directory containing spike-ins index files",
+        "repeatArgument": false,
+        "showArgument": false
+    },
+    "value": {
+        "default": "/indices/spike_ins/spike_ins",
+        "type": "string",
+        "order": 0,
+        "required": true,
+        "validator": null,
+        "visible": true
+    }
+   },
+   {
+    "id": "rna_index_dir",
+    "details": {
+        "argument": "-ri",
+        "description": null,
+        "label": "directory containing srna and grna index files",
+        "repeatArgument": false,
+        "showArgument": false
+    },
+    "value": {
+        "default": "/indices/combined_grna_rna_coding/combined_grna_rna_coding",
+        "type": "string",
+        "order": 0,
+        "required": true,
+        "validator": null,
+        "visible": true
+    }
+   },
+  {
     "id": "output_dir",
     "details": {
       "argument": "-o",
@@ -117,7 +101,7 @@
     "value": {
         "default": "output",
         "type": "string",
-        "order": 1,
+        "order": 0,
         "required": true,
         "validator": null,
         "visible": true
