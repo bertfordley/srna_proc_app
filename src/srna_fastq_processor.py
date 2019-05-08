@@ -25,11 +25,11 @@ def trim_reads(fastq_in, fastq_trim_out):
     subprocess.call(cmd, shell=True)
 
 
-def align_reads(fastq_file, index_file, sam_file):
+def align_reads(fastq_file, index_file, sam_file, method, sensitivity):
 
     # user defined # of threads?
-    cmd = "bowtie2 -p 6 --phred33 --very-sensitive -x {} -U {} -S {}".format(
-        index_file, fastq_file, sam_file)
+    cmd = "bowtie2 -p 6 --phred33 {} {} -x {} -U {} -S {}".format(
+        method, sensitivity, index_file, fastq_file, sam_file)
     subprocess.call(cmd, shell=True)
 
 
@@ -123,7 +123,7 @@ if __name__ == "__main__":
     spike_sam = os.path.join(output_dir, fq_base_name[:-9] + "_trim.spike-ins.sam")
 
     # align spike-in reads using bowtie2
-    align_reads(trim_file, spike_index_dir, spike_sam)
+    align_reads(trim_file, spike_index_dir, spike_sam, "--end-to-end", "--very-sensitive")
 
     # make bam file for spike-ins
     make_bam(spike_sam)
@@ -137,9 +137,9 @@ if __name__ == "__main__":
     ## gRNAs and sRNAs
     rna_sam = os.path.join(output_dir, fq_base_name[:-9] + "_rna.sam")
     # align gRNA/sRNA reads using bowtie2
-    align_reads(filtered_fastq, rna_index_dir, rna_sam)
+    align_reads(filtered_fastq, rna_index_dir, rna_sam, "--end-to-end", "--very-sensitive")
 
-    # make bam for gRNA/sRNA
+    # make bam for gRNA/sRNAs
     make_bam(rna_sam)
     rna_bam = rna_sam[:-3] + "sorted.bam"
 
