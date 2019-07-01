@@ -4,7 +4,7 @@ by: Robert C. Moseley
 """
 
 import os
-import gzip
+import json
 import fuzzywuzzy.process
 import subprocess
 import argparse
@@ -165,13 +165,13 @@ if __name__ == "__main__":
 
     parser.add_argument("-ri", "--rna_index_dir",
                         type=str,
-                        default="indices/srna_seqs/srna_seqs - EMPTY",
+                        default="indices/srna_seqs/srna_seqs",
                         required=True,
                         help="dir containing srna sequences index files to align reads to")
 
     parser.add_argument("-t", "--threshold",
                         type=int,
-                        default=80,
+                        default=90,
                         required=True,
                         help="threshold for fuzzy string matching reads to gRNA target sequences")
 
@@ -193,7 +193,6 @@ if __name__ == "__main__":
     fq_base_name = os.path.basename(fastq_file)
     spike_index_dir = args.spike_index_dir
     rna_index_dir = args.rna_index_dir
-    # grna_index_dir = args.grna_index_dir
     threshold = args.threshold
     kit_tech = args.kit_tech
     output_dir = args.output_dir
@@ -273,6 +272,11 @@ if __name__ == "__main__":
                        "grna-target-seqs", grna_filtered_ids_file)
     # fastq file with no spike-in or gRNA reads
     grna_spike_filtered_fastq = spike_filtered_fastq[:-6] + ".grna-target-seqs_filtered.fastq"
+
+    grna_json = json.dumps(grna_counts_dic)
+    grna_json_file = open(os.path.join(output_dir, fq_base_name[:-9] + "_grna-counts.json"), "w")
+    grna_json_file.write(grna_json)
+    grna_json_file.close()
 
     # small RNA SEQUENCES #
     # ------------------------------------------------------------ #

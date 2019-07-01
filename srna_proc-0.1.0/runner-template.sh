@@ -9,7 +9,6 @@ then
     fi
     if [ -z "${CONTAINER_IMAGE}" ]; then
         echo "CONTAINER_IMAGE was not set via the app or CONTAINER_IMAGE file"
-#        CONTAINER_IMAGE="sd2e/base:ubuntu17"
         CONTAINER_IMAGE="sd2e/apps:python2-miniconda"
     fi
 fi
@@ -18,5 +17,5 @@ fi
 #   Example: docker run centos:7 uname -a
 #            container_exec centos:7 uname -a
 
-echo container_exec ${CONTAINER_IMAGE} python /src/srna_fastq_processor.py -fq ${fastq_file} -si ${spike_index_dir} -ri ${rna_index_dir} -k ${kit_tech} -o ${output_dir}
-container_exec ${CONTAINER_IMAGE} python /src/srna_fastq_processor.py -fq ${fastq_file} -si ${spike_index_dir} -ri ${rna_index_dir} -k ${kit_tech} -o ${output_dir}
+echo container_exec ${CONTAINER_IMAGE} python /src/srna_fastq_processor.py -fq ${fastq_file} -si ${spike_index_dir} -ri ${rna_index_dir} -k ${kit_tech} -t ${threshold} -o ${output_dir}
+container_exec ${CONTAINER_IMAGE} python /src/srna_fastq_processor.py -fq ${fastq_file} -si ${spike_index_dir} -ri ${rna_index_dir} -k ${kit_tech} -t ${threshold} -o ${output_dir}
