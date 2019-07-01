@@ -2,7 +2,7 @@
   "name": "{{ agave.username }}-{{ app.name }}",
   "version": "{{ app.version }}",
   "executionType": "HPC",
-  "executionSystem": "hpc-tacc-maverick-{{ agave.username }}",
+  "executionSystem": "hpc-tacc-wrangler-{{ agave.username }}",
   "parallelism": "SERIAL",
   "deploymentPath": "{{ agave.username }}/apps/{{ app.bundle }}",
   "deploymentSystem": "data-sd2e-projects-users",
@@ -54,6 +54,24 @@
     }
   },
   {
+    "id": "kit_tech",
+    "details": {
+        "argument": "-k",
+        "description": null,
+        "label": "small RNAseq kit used",
+        "repeatArgument": false,
+        "showArgument": false
+    },
+    "value": {
+        "default": "clonetech",
+        "type": "string",
+        "order": 0,
+        "required": true,
+        "validator": null,
+        "visible": true
+    }
+  },
+  {
     "id": "spike_index_dir",
     "details": {
         "argument": "-si",
@@ -81,7 +99,7 @@
         "showArgument": false
     },
     "value": {
-        "default": "/indices/combined_grna_rna_coding/combined_grna_rna_coding",
+        "default": "/indices/combined_short_grna_rna_coding/combined_short_grna_rna_coding",
         "type": "string",
         "order": 0,
         "required": true,

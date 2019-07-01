@@ -18,5 +18,5 @@ fi
 #   Example: docker run centos:7 uname -a
 #            container_exec centos:7 uname -a
 
-echo container_exec ${CONTAINER_IMAGE} python /src/srna_fastq_processor.py -fq ${fastq_file} -si ${spike_index_dir} -ri ${rna_index_dir} -o ${output_dir}
-container_exec ${CONTAINER_IMAGE} python /src/srna_fastq_processor.py -fq ${fastq_file} -si ${spike_index_dir} -ri ${rna_index_dir} -o ${output_dir}
+echo container_exec ${CONTAINER_IMAGE} python /src/srna_fastq_processor.py -fq ${fastq_file} -si ${spike_index_dir} -ri ${rna_index_dir} -k ${kit_tech} -o ${output_dir}
+container_exec ${CONTAINER_IMAGE} python /src/srna_fastq_processor.py -fq ${fastq_file} -si ${spike_index_dir} -ri ${rna_index_dir} -k ${kit_tech} -o ${output_dir}
